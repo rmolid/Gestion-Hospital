@@ -1,6 +1,7 @@
 package mvc.giu;
 
 import base.Centro;
+import base.Enfermedad;
 import base.Medico;
 import base.Paciente;
 import com.github.lgooddatepicker.components.DatePicker;
@@ -20,6 +21,8 @@ import java.util.ResourceBundle;
  * de la aplicacion principal
  *
  * @author Raquel Molina Diaz
+ * @version 1
+ * @since 16/02/2021
  */
 public class Ventana {
     JFrame frame;
@@ -103,8 +106,26 @@ public class Ventana {
     JButton botEliminarFoto;
     JButton botGrafico1;
     JButton botTiposGraficas;
+    JButton botEnfermedadPac;
+    JList<Enfermedad> listaEnfermedades;
+    DefaultListModel<Enfermedad> dlmEnfermedad;
+    JButton botNuevaEnferm;
+    JButton botEliminarEnferm;
+    JButton botModifEnferme;
     ResourceBundle buldle;
-    private BufferedImage background;
+    JTextField txtNombEnf;
+    JTextField txtMedEnf;
+    JTextField txtSintEnf;
+    JTextField txtOrigEnf;
+    JPanel panelDatosEnfermedades;
+    JPanel panelBotonesEnfermedad;
+    JPanel panelEnfermedadPequeno;
+    JPanel panelBotonDeEnfermedad;
+    JButton botInformes;
+    JButton botInformeCentros;
+    JButton botTodosLosInformes;
+    JButton botJavadoc;
+
 
     /**
      * Constructor de la clase ventana
@@ -113,14 +134,11 @@ public class Ventana {
         buldle = ResourceBundle.getBundle("idiomaResourcebundle");
         frame = new JFrame(buldle.getString("lblTituloApp"));
         frame.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("medical.png")));
-
         frame.setContentPane(panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(false);
         frame.setLocationRelativeTo(null);
-
-
         crearBarraMenu();
         configurarDatePicker();
         activarControlPorTecladoAceleradoresBotonesPorDefecto();
@@ -128,7 +146,12 @@ public class Ventana {
         iniciarListasYCombos();
     }
 
+    /**
+     * Metodo que cambia la visibilidad de la ventana principal
+     * @param visible el parametro visible es de tipo boolean, cuando toma el valor true la ventana es visible.
+     */
     public void setVisible(boolean visible) {
+
         frame.setVisible(visible);
     }
 
@@ -152,6 +175,10 @@ public class Ventana {
 
         dcbmMedico = new DefaultComboBoxModel<Medico>();
         cbMedicoDePaciente.setModel(dcbmMedico);
+
+        dlmEnfermedad = new DefaultListModel<Enfermedad>();
+        listaEnfermedades.setModel(dlmEnfermedad);
+
     }
 
     /**
@@ -233,6 +260,14 @@ public class Ventana {
         botEliminarFoto.setMnemonic(KeyEvent.VK_D);
         botTiposGraficas.setMnemonic(KeyEvent.VK_G);
 
+        botEnfermedadPac.setMnemonic(KeyEvent.VK_E);
+        botNuevaEnferm.setMnemonic(KeyEvent.VK_N);
+        botEliminarEnferm.setMnemonic(KeyEvent.VK_X);
+        botModifEnferme.setMnemonic(KeyEvent.VK_M);
+
+        //INFORMES
+        botInformeCentros.setMnemonic(KeyEvent.VK_C);
+        botInformes.setMnemonic(KeyEvent.VK_I);
         //Aceleradores del Menu
         itemCargar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
         itemGuardar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
@@ -252,6 +287,4 @@ public class Ventana {
         }
 
     }
-
-
 }

@@ -7,10 +7,11 @@ import java.io.Serializable;
  * Clase Centro representa un centro de salud. Implementa Serializale para que
  * sus instancias puedan ser guardades en un fichero binario
  *
- * @author Raquel
- *
+ * @author Raquel Molina Diaz
+ * @version 1
+ * @since 16/02/2021
  */
-public class Centro implements Serializable{
+public class Centro implements Serializable {
     private Icon imagenCentro;
     private String nombreCentro;
     private String localidadCentro;
@@ -19,11 +20,12 @@ public class Centro implements Serializable{
 
     /**
      * Constructor de la clase Centro
-     * @param imagenCentro
-     * @param nombreCentro
-     * @param localidadCentro
-     * @param capacidad
-     * @param esPrivado
+     *
+     * @param imagenCentro    el parametro imagenCentro indica la imagen de un centro
+     * @param nombreCentro    el parametro nombreCentro indica el nombre del centro de salud
+     * @param localidadCentro el parametro localidadCentro indica la localidad del centro de salud.
+     * @param capacidad       el parametro capacidad idica la capacidad del centro de salud
+     * @param esPrivado       el parametro esPrivado indica si un centro es privado o publico.
      */
     public Centro(Icon imagenCentro, String nombreCentro, String localidadCentro, int capacidad, Boolean esPrivado) {
         this.imagenCentro = imagenCentro;
@@ -34,17 +36,20 @@ public class Centro implements Serializable{
     }
 
     /**
-     *Metodo que devuelve un Icon que se corresponde con la imagen del
+     * Metodo que devuelve un Icon que se corresponde con la imagen del
      * centro de salud
-     * @return imagenCentro
+     *
+     * @return imagenCentro imagen del centro de salud
      */
     public Icon getImagenCentro() {
+
         return imagenCentro;
     }
 
     /**
      * Metodo set que permite cambiar la imagen del centro
-     * @param imagenCentro
+     *
+     * @param imagenCentro parametro que se corresponde con la imagen del centro
      */
     public void setImagenCentro(Icon imagenCentro) {
         this.imagenCentro = imagenCentro;
@@ -53,7 +58,8 @@ public class Centro implements Serializable{
     /**
      * Metodo que devuelve un String que se corresponde con el nombre del
      * dentro de salud
-     * @return nombreCentro
+     *
+     * @return nombreCentro nombre del centro de salud
      */
     public String getNombreCentro() {
         return nombreCentro;
@@ -61,7 +67,8 @@ public class Centro implements Serializable{
 
     /**
      * Metodo set que permite cambiar el nombre del centro
-     * @param nombreCentro
+     *
+     * @param nombreCentro parametro que se corresponde con el nombre del centro
      */
     public void setNombreCentro(String nombreCentro) {
         this.nombreCentro = nombreCentro;
@@ -70,7 +77,8 @@ public class Centro implements Serializable{
     /**
      * Metodo que devuelve un String que se corresponde con la localidad
      * del centro de salud
-     * @return localidadCentro
+     *
+     * @return localidadCentro localidad de un centro de salud
      */
     public String getLocalidadCentro() {
         return localidadCentro;
@@ -78,7 +86,8 @@ public class Centro implements Serializable{
 
     /**
      * Metodo set que permite cambiar la localidad del centro
-     * @param localidadCentro
+     *
+     * @param localidadCentro parametro que se corresponde con la localidad del centro
      */
     public void setLocalidadCentro(String localidadCentro) {
         this.localidadCentro = localidadCentro;
@@ -87,7 +96,8 @@ public class Centro implements Serializable{
     /**
      * Metodo que devuelve un int que se corresponde con la
      * capacidad de pacientes que tiene el centro de salud
-     * @return capacidad
+     *
+     * @return capacidad se corresponde con el aforo del centro de salud
      */
     public int getCapacidad() {
         return capacidad;
@@ -95,7 +105,8 @@ public class Centro implements Serializable{
 
     /**
      * Metodo set que permite cambiar la capacidad del centro
-     * @param capacidad
+     *
+     * @param capacidad el parametro se corresponde con el aforo del centro
      */
     public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
@@ -104,7 +115,8 @@ public class Centro implements Serializable{
     /**
      * Metodo que devuelve True en caso de que el centro
      * sea privado y flase si es publico
-     * @return esPrivado
+     *
+     * @return esPrivado retorna true en caso de que sea privado y false si es publico
      */
     public Boolean getEsPrivado() {
         return esPrivado;
@@ -112,24 +124,22 @@ public class Centro implements Serializable{
 
     /**
      * Metodo que permite cambiar un centro de privado a publico
-     * @param esPrivado
+     *
+     * @param esPrivado El parametro indica si es privado (true) o publico(false) un centro
      */
     public void setEsPrivado(Boolean esPrivado) {
         this.esPrivado = esPrivado;
     }
 
     /**
-     * Metodo que devuelve una cadena con los atributos del centro
-     * @return imagenCentro
-     * @return nombreCentro
-     * @return localidadCentro
-     * @return capacidad
-     * @return esPrivado
+     * Metodo que devuelve una cadena con el nombre y localidad del centro de salud
+     *
+     * @return String que se corresponde con el nombre y la localidad de un centro de salud.
      */
     @Override
     public String toString() {
-        return "CENTRO: " + nombreCentro + "\n"
-                + " Localidad: " + localidadCentro;
+        return "CENTRO: " + nombreCentro.toUpperCase() + "\n"
+                + " LOCALIDAD: " + localidadCentro.toUpperCase();
 
     }
 }

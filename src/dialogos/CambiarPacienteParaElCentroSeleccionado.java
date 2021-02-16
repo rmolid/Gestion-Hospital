@@ -9,10 +9,13 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 /**
- * La clase CambiarPacienteParaElCentroSeleccionado permite
- * cambiar pacientes de otros centros hacia el centro
- * que se selecciono en la lista, permitiendose en esta clase
- * asignar un medico disponible en el centro actual seleccionado
+ * La clase CambiarPacienteParaElCentroSeleccionado permite cambiar pacientes
+ * de otros centros hacia el centro que se selecciono en la lista de centro, permitiendose
+ * en esta clase asignar un medico disponible en el centro actual seleccionado
+ *
+ * @author Raquel Molina Diaz
+ * @version 1
+ * @since 16/02/2021
  */
 public class CambiarPacienteParaElCentroSeleccionado extends JDialog {
     private JPanel contentPane;
@@ -34,11 +37,10 @@ public class CambiarPacienteParaElCentroSeleccionado extends JDialog {
     /**
      * Constructor de la clase CambiarPacienteParaElCentroSeleccionado
      *
-     * @param centro
-     * @param listaMedicos
-     * @param paciente
+     * @param centro       el parametro hace referencia al centro con con el cual se esta trabajando actualmente
+     * @param listaMedicos el parametro listaMedicos hace referencia a la lista de medicos que hay en el centro
+     * @param paciente     el parametro paciente hace referencia al paciente que se quiere cambiar de centro de salud
      */
-
     public CambiarPacienteParaElCentroSeleccionado(Centro centro, ArrayList<Medico> listaMedicos, Paciente paciente) {
         this.paciente = paciente;
         this.listaMedicos = listaMedicos;
@@ -52,7 +54,7 @@ public class CambiarPacienteParaElCentroSeleccionado extends JDialog {
     }
 
     /**
-     * Metodo que inica el combobox y le setea el modelo
+     * Metodo que inicializa el DefaultComboBoxModel y le setea el modelo al comboBox
      */
     private void iniciarCombo() {
         dcbmMedicos = new DefaultComboBoxModel();
@@ -109,7 +111,7 @@ public class CambiarPacienteParaElCentroSeleccionado extends JDialog {
     }
 
     /**
-     * Metodo que cambia al paciente hacia el centro actual que se está gestionando
+     * Metodo que cambia al paciente hacia el centro actual que se esta gestionando
      * asignandole un nuevo medico de este centro.
      */
     private void onOK() {
@@ -125,5 +127,4 @@ public class CambiarPacienteParaElCentroSeleccionado extends JDialog {
         // add your code here if necessary
         dispose();
     }
-
 }

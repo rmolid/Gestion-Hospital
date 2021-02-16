@@ -13,8 +13,12 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
- * La clase Gestion de centro tiene la finalidad de dar la opcion al usuario
+ * La clase GestionCentros tiene la finalidad de dar la opcion al usuario
  * de tener acceso a todos los datos de la aplicacion tanto medicos como pacientes
+ *
+ * @author Raquel Molina Diaz
+ * @version 1
+ * @since 16/02/2021
  */
 public class GestionCentros extends JDialog implements ActionListener {
     private JPanel panel1;
@@ -46,10 +50,10 @@ public class GestionCentros extends JDialog implements ActionListener {
      * Constructor de la clase GestionCentros. Esta clase recoge los medicos que hay en el Centro seleccionado en el JList de la clase Ventana
      * Esta clase se destina a llamar a diferentes clases creadas para modificar las relaciones entre los distintos objetos de una forma centralizada
      *
-     * @param centro
-     * @param listaMedico
-     * @param listaPaciente
-     * @param listaCentros
+     * @param centro        el parametro centro hace referencia al centro que se selecciono el el JList de centros
+     * @param listaMedico   el parametro listaMedicos hace referencia a la lista de medicos del modelo
+     * @param listaPaciente el parametro listaPaciente hace referencia a la lista de pacientes del modelo
+     * @param listaCentros  el parametro listaCentros hace referencia a la lista de centros del modelo
      */
     public GestionCentros(Centro centro, ArrayList<Medico> listaMedico, ArrayList<Paciente> listaPaciente, ArrayList<Centro> listaCentros) {
         resourceBundle = ResourceBundle.getBundle("idiomaResourcebundle");
@@ -81,7 +85,7 @@ public class GestionCentros extends JDialog implements ActionListener {
     /**
      * Metodo que asocia un ActionListener a los elementos con los cuales el usuario va a interactuar
      *
-     * @param listener
+     * @param listener el parametro hace referencia al ActionListener que se asocia a los botones
      */
     private void initActionListener(ActionListener listener) {
         botIzquierda.addActionListener(listener);
@@ -93,7 +97,7 @@ public class GestionCentros extends JDialog implements ActionListener {
     /**
      * Metodo que asocia un ActionEvent a los diferentes elementos a través de su ActionComand
      *
-     * @param e
+     * @param e el parametro e asocia un ActionEnent a diferentes botones
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -108,7 +112,6 @@ public class GestionCentros extends JDialog implements ActionListener {
                 break;
             }
             case "grupoRB": {
-
                 cambiarTituloLabels();
                 dlmMedicosOtroCentro.removeAllElements();
                 dlmMedicosCentro.removeAllElements();
@@ -290,18 +293,4 @@ public class GestionCentros extends JDialog implements ActionListener {
         }
     }
 
-    /**
-     * Metodo que refresca la lista de pacientes de un centro de salud
-     */
-    private void refrescarListaPacienteCentro() {
-        dlmPacienteCentro.removeAllElements();
-        dlmPacienteOtroCentro.removeAllElements();
-        for (Paciente paciente : listaPaciente) {
-            if (paciente.getCentro() == centro) {
-                dlmPacienteCentro.addElement(paciente);
-            } else {
-                dlmPacienteOtroCentro.addElement(paciente);
-            }
-        }
-    }
 }

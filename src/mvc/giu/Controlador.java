@@ -1,12 +1,15 @@
 package mvc.giu;
 
 import base.Centro;
+import base.Enfermedad;
 import base.Medico;
 import base.Paciente;
-import dialogos.DialogoDiferentesGraficas;
-import dialogos.GestionCentros;
-import dialogos.Preferencias;
+import dialogos.*;
 import mvc.modelo.Modelo;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
@@ -23,6 +26,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.Date;
@@ -37,22 +44,24 @@ import java.util.ResourceBundle;
  * la clase Vista y el Modelo
  *
  * @author Raquel Molina Diaz
+ * @version 1
+ * @since 16/02/2021
  */
 public class Controlador implements ActionListener, FocusListener, ItemListener, ListSelectionListener, MouseListener {
 
     private Modelo modelo;
     private Ventana ventana;
+    private DialogoEnfermedad dialogo;
     private ResourceBundle bundle;
 
     /**
      * Constructor de la clase controlador
      *
-     * @param modelo
-     * @param ventana
+     * @param modelo  el parametro modelo se corresponde con el modelo de la aplicacion
+     * @param ventana el parametro ventana hace referencia a la ventana principal de la aplicacion
      */
     public Controlador(Modelo modelo, Ventana ventana) {
         super();
-
         this.modelo = modelo;
         this.ventana = ventana;
         cambiarColores();
@@ -62,30 +71,19 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
         initItemStatChanged(this);
         initListListeners(this);
         initMouseClickedListeners(this);
-       // crearDir();
-
 
     }
 
-/*
-    private void crearDir(){
-        File d = new File("./data");
-        File documento = new File(d, "preferencias.conf");
-        d.mkdir();
-        try {
-            documento.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-*/
     /**
-     * Metodo que asocia un MouseListener a la lista de centros
+     * Metodo que asocia un MouseListener a la lista de centros y
+     * a la lista de enfermedades.
      *
-     * @param e
+     * @param e el parametro e asocia un eventro de tipo MouseListener a la lista de centros y enfermedades
      */
     private void initMouseClickedListeners(MouseListener e) {
+
         ventana.listCentros.addMouseListener(e);
+        ventana.listaEnfermedades.addMouseListener(e);
     }
 
     /**
@@ -98,12 +96,13 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
         ventana.listPacientes.addListSelectionListener(listener);
         ventana.listMedicos.addListSelectionListener(listener);
         ventana.listCentros.addListSelectionListener(listener);
+        ventana.listaEnfermedades.addListSelectionListener(listener);
     }
 
     /**
      * Metodo que asocia un evento de tipo ItemListener a combo box de centros
      *
-     * @param evento
+     * @param evento el parametro asocia un evento de tipo ItemListener a comboBox de los pacientes
      */
     private void initItemStatChanged(ItemListener evento) {
 
@@ -114,7 +113,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
      * Metodo que asocia un Action Listener a los elementos con los que el usuario
      * interactua.
      *
-     * @param listener de tipo ActionListener
+     * @param listener de tipo ActionListener asociado a los diferentes botones con los que se interactua
      */
     private void initActionHandlers(ActionListener listener) {
         ventana.botNuevoMedico.addActionListener(listener);
@@ -137,15 +136,28 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
         ventana.botGrafico1.addActionListener(listener);
         ventana.botTiposGraficas.addActionListener(listener);
 
+        //Enfermedades
+
+        ventana.botNuevaEnferm.addActionListener(listener);
+        ventana.botModifEnferme.addActionListener(listener);
+        ventana.botEliminarEnferm.addActionListener(listener);
+        ventana.botEnfermedadPac.addActionListener(listener);
+
         //Preferencias
         ventana.botAjustes.addActionListener(listener);
+
+        //Informes
+        ventana.botInformes.addActionListener(listener);
+        ventana.botInformeCentros.addActionListener(listener);
+        ventana.botTodosLosInformes.addActionListener(listener);
+        ventana.botJavadoc.addActionListener(listener);
     }
 
     /**
      * Metodo que asocia un FocusListener a los diferentes elementos
      * de la ventana
      *
-     * @param listener
+     * @param listener el parametro listener es de tipo FocusListener
      */
     private void initFocusLister(FocusListener listener) {
         //Campos de Medico
@@ -172,24 +184,41 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
     }
 
     /**
-     * Metodo que asocia un evento de tipo MouseEvent a la lista
-     * de los centros para crear una instancia de la clase Gestion
-     * Centros con el centro seleccionado.
+     * Metodo que asocia un evento de tipo MouseEvent a la lista de los centros para crear una instancia
+     * de la clase GestionçCentros con el centro seleccionado o crea una instancia de la clase DialogoGestionEnfermedades
+     * recogiendo la enfermedad que se ha seleccionado.
      *
-     * @param e
+     * @param e el parametro e asocia un evento de tipo MouseEvent para controlar el numero de clic
+     *          que se hacen sobre una lista.
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getClickCount() == 2) {
-            if (modelo.getListaCentros().size() == 0) {
-                Util.mensajeError(bundle.getString("CenterListEmpty"));
-            } else {
-                ventana.listCentros.getSelectedIndex();
-                Centro centro = (Centro) ventana.listCentros.getSelectedValue();
-                ArrayList<Medico> listaMedicos = modelo.getListaMedicos();
-                ArrayList<Paciente> listaPacientes = modelo.getListaPacientes();
-                ArrayList<Centro> listaCentros = modelo.getListaCentros();
-                GestionCentros gestionCentros = new GestionCentros(centro, listaMedicos, listaPacientes, listaCentros);
+        if (ventana.JTabbedPane.getSelectedIndex() == 2) {
+            if (e.getClickCount() == 2) {
+                if (modelo.getListaCentros().size() == 0) {
+                    Util.mensajeError(bundle.getString("CenterListEmpty"));
+                } else {
+                    ventana.listCentros.getSelectedIndex();
+                    Centro centro = (Centro) ventana.listCentros.getSelectedValue();
+                    ArrayList<Medico> listaMedicos = modelo.getListaMedicos();
+                    ArrayList<Paciente> listaPacientes = modelo.getListaPacientes();
+                    ArrayList<Centro> listaCentros = modelo.getListaCentros();
+                    GestionCentros gestionCentros = new GestionCentros(centro, listaMedicos, listaPacientes, listaCentros);
+                }
+
+            }
+        } else {
+            if (e.getClickCount() == 2) {
+                if (modelo.getListaEnfermedades().size() == 0) {
+                    Util.mensajeError(bundle.getString("CenterListEmpty"));
+                } else {
+                    ventana.listaEnfermedades.getSelectedIndex();
+                    Enfermedad enfermedad = (Enfermedad) ventana.listaEnfermedades.getSelectedValue();
+                    ArrayList<Paciente> listaPacientes = modelo.getListaPacientes();
+                    ArrayList<Enfermedad> listaEnfermedades = modelo.getListaEnfermedades();
+                    DialogoGestionEnfermedades gestionEnfermedades = new DialogoGestionEnfermedades(enfermedad, listaPacientes, listaEnfermedades);
+
+                }
             }
         }
     }
@@ -198,7 +227,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
      * Metodo que acosia un ActionEvent a los diferentes ActionComand
      * de los botones de la aplicacion.
      *
-     * @param event
+     * @param event el parametro event asocia un ActionEnent a diferentes botones
      */
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -216,6 +245,10 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
                 nuevoCentro();
                 break;
             }
+            case "nuevaEnfermedad": {
+                nuevaEnfermedad();
+                break;
+            }
 
             case "eliminarMedico": {
                 eliminarMedico();
@@ -228,7 +261,17 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
             case "eliminarCentro": {
                 eliminarCentro();
                 break;
+            }
+            case "EliminarEnfermedad": {
+                eliminarEnfermedad();
+                break;
+            }
 
+            case "ModificarEnfermedad": {
+                Enfermedad enfermedad = ventana.listaEnfermedades.getSelectedValue();
+                modificarEnfermedad(enfermedad);
+                refrescarListaEnfermedades();
+                break;
             }
             case "subirImagen": {
                 subirImagenCentro();
@@ -274,6 +317,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
             }
             case "ModificarPaciente": {
                 Paciente paciente = ventana.listPacientes.getSelectedValue();
+
                 modificarPaciente(paciente);
                 refrescarListaPacientes();
                 break;
@@ -284,6 +328,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
                 refrescarListaCentros();
                 break;
             }
+
             case "botDeleteFoto": {
                 eliminarFotoCentro();
                 break;
@@ -293,17 +338,105 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
                 pacientesPorCentroGrafico();
                 break;
             }
-            case"DosTiposGraficas":{
+            case "DosTiposGraficas": {
                 DialogoDiferentesGraficas dialogoDiferentesGraficas = new DialogoDiferentesGraficas(modelo);
+                break;
+            }
+
+            case "addEnfermedades": {
+                addEnfermedades();
+                break;
+            }
+
+            case "verInformes": {
+                mostrarInformeMedicos();
+                break;
+            }
+            case "verInformesCentros": {
+                mostrarInformesCentros();
+                break;
+            }
+
+            case "todosLosInformes": {
+                ArrayList<Centro> listaCentros = modelo.getListaCentros();
+                ArrayList<Medico> listaMedicos = modelo.getListaMedicos();
+                DialogoGenerarInformes dialog = new DialogoGenerarInformes(listaCentros, listaMedicos);
+            }
+
+            case"verJavaDoc":{
+                System.out.println("javadoc");
+
+                ventana.botJavadoc.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+                try {
+                    Desktop.getDesktop().browse(new URI("index.html"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                break;
             }
         }
     }
 
     /**
-     * Metodo que genera un gráfico de barras en el cual
-     * el eje de las x recoge los centros de salud que estan
-     * dados de alta en la aplicacion y en el eje y el numero
-     * de pacientes que hay por cada centro de salud.
+     * Metodo que compila y muersta el informe que recoge los datos de los centros de salud
+     */
+    private void mostrarInformesCentros() {
+        try {
+            JasperCompileManager.compileReportToFile("informes/CentrosDeSalud.jrxml");
+            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/CentrosDeSalud.jasper"));
+            JRBeanCollectionDataSource coleccion = new JRBeanCollectionDataSource(modelo.getListaCentros());
+            JasperPrint jPrint = JasperFillManager.fillReport(report, null, coleccion);
+            JasperViewer.viewReport(jPrint, false);
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Metodo que compila y muestra el informe que recoge los datos de los medicos.
+     */
+    private void mostrarInformeMedicos() {
+        try {
+            JasperCompileManager.compileReportToFile("informes/MedicosPorCentro.jrxml");
+            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/MedicosPorCentro.jasper"));
+            JRBeanCollectionDataSource coleccion = new JRBeanCollectionDataSource(modelo.getListaMedicos());
+            JasperPrint jPrint = JasperFillManager.fillReport(report, null, coleccion);
+            JasperViewer.viewReport(jPrint, false);
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Metodo que permite agregar enfermedades al paciente seleccionado el la listPacientes de la ventana
+     */
+    private void addEnfermedades() {
+        ArrayList<Enfermedad> enfermedadesPaciente = new ArrayList<Enfermedad>();
+        ArrayList<Enfermedad> enfermedades = new ArrayList<Enfermedad>();
+        Paciente pacient = ventana.listPacientes.getSelectedValue();
+        if (pacient != null) {
+            enfermedadesPaciente = pacient.getEnfermedaadesPaciente();
+            enfermedades = modelo.getListaEnfermedades();
+            dialogo = new DialogoEnfermedad(enfermedades, enfermedadesPaciente, pacient);
+            enfermedadesPaciente = dialogo.getListaEnfermedadesDialogo();
+
+        } else {
+            enfermedades = modelo.getListaEnfermedades();
+            enfermedadesPaciente = new ArrayList<Enfermedad>();
+            dialogo = new DialogoEnfermedad(enfermedades, enfermedadesPaciente, pacient);
+            enfermedades = dialogo.getListaEnfermedadesDialogo();
+
+        }
+    }
+
+
+    /**
+     * Metodo que genera un gráfico de barras en el cual el eje de las x recoge los centros de salud que estan
+     * dados de alta en la aplicacion y en el eje y el numero de pacientes que hay por cada centro de salud.
      */
     private void pacientesPorCentroGrafico() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -328,14 +461,11 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
     }
 
     /**
-     * Meotodo que elimina la foto del centro seleccionado en el
-     * caso de que la lista de centros tenga algún elemento y en
-     * el caso de que no este ningun elemento seleccionado le
-     * indica al usuario con un mensaje de error que no hay
+     * Meotodo que elimina la foto del centro seleccionado en el caso de que la lista de centros tenga algún elemento y en
+     * el caso de que no este ningun elemento seleccionado le indica al usuario con un mensaje de error que no hay
      * ningun elemento seleccionado
      */
     private void eliminarFotoCentro() {
-
 
         if (ventana.dlmCentro.isEmpty()) {
 
@@ -365,7 +495,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
      * Metodo que modifica los atributos de un centro de salud seleccionado
      * en la DefaultListModel de centros.
      *
-     * @param centro
+     * @param centro el parametro hace referencia al centro que va a ser modificado
      */
     private void modificarCentro(Centro centro) {
         if (!ventana.dlmCentro.isEmpty()) {
@@ -397,7 +527,6 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
                 }
             }
 
-
         } else {
             Util.mensajeError(bundle.getString("list.center.empty"));
         }
@@ -406,7 +535,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
     /**
      * Metodo que modifica los atributos de un paciente
      *
-     * @param paciente
+     * @param paciente el parametro paciente hace referencia al paciente que va a ser modificado
      */
     private void modificarPaciente(Paciente paciente) {
         boolean modificado = false;
@@ -414,9 +543,10 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
         String nombre = ventana.txtNombrePaciente.getText();
         String apellidos = ventana.txtApellidosPaciente.getText();
         LocalDate fecha = ventana.pacienteDatePicker.getDate();
-
         Medico medico = (Medico) ventana.cbMedicoDePaciente.getSelectedItem();
         Centro centro = (Centro) ventana.cbCentroPaciente.getSelectedItem();
+
+
         double pesoPasiente = 0;
 
         if (!ventana.dlmPaciente.isEmpty()) {
@@ -475,6 +605,9 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
                         paciente.setMedico(medico);
                         paciente.setCentro(centro);
                         paciente.setPeso(pesoPasiente);
+                        if (paciente.getEnfermedaadesPaciente() != null && dialogo != null) {
+                            paciente.setEnfermedaadesPaciente(dialogo.getListaEnfermedadesDialogo());
+                        }
                         Util.mostrarEjecucionCorrecta(bundle.getString("modificacion.correcta"));
                     } else {
 
@@ -490,7 +623,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
     /**
      * Metodo que modifica los atributos de un medico
      *
-     * @param medicoAModificar
+     * @param medicoAModificar el parametro medicoAModificar hace referencia al medico que se va a modificar
      */
     private void mofificarMedico(Medico medicoAModificar) {
         if (medicoAModificar != null) {
@@ -551,6 +684,49 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
         }
     }
 
+    /**
+     * Metodo que modifica una enfermedad
+     *
+     * @param modificado el parametro modificado hace referencia a la enfermedad que va a ser
+     *                   modificada.
+     */
+    private void modificarEnfermedad(Enfermedad modificado) {
+        String nombre = ventana.txtNombEnf.getText();
+        String sintomas = ventana.txtSintEnf.getText();
+        String origen = ventana.txtOrigEnf.getText();
+        String medicamento = ventana.txtMedEnf.getText();
+        boolean seModifica = false;
+
+        if (!nombre.isEmpty()) {
+            seModifica = true;
+        }
+
+        if (!sintomas.isEmpty()) {
+            seModifica = true;
+        }
+
+        if (!origen.isEmpty()) {
+            seModifica = true;
+        }
+        if (!medicamento.isEmpty()) {
+            seModifica = true;
+        }
+
+        if (seModifica) {
+            int opcion = Util.mostrarDialogoSiNo(bundle.getString("EnfermedadModicicacionConfirm"));
+            if (opcion == Util.ACEPTAR) {
+                modificado.setNombre(nombre);
+                modificado.setOrigen(origen);
+                modificado.setMedicamento(medicamento);
+                modificado.setSintomas(sintomas);
+                Util.mostrarEjecucionCorrecta(bundle.getString("modificacion.correcta.enfermedad"));
+
+            } else {
+                Util.mensajeError(bundle.getString("modificacion.enfermedad.incorrecta"));
+            }
+        }
+    }
+
 
     /**
      * Metodo que muestra un dialogo de seleccion de fichero para cargar los datos
@@ -567,6 +743,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
                 refrescarListaCentros();
                 refrescarListaMedicos();
                 refrescarComboboxCentros();
+                refrescarListaEnfermedades();
 
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -598,6 +775,18 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
     }
 
     /**
+     * Metodo que limpia los campos de los JTexField de enfermeadd, borrando lo que se
+     * escribio en ellos
+     */
+    private void limpiarCamposEnfermedad() {
+        ventana.txtNombEnf.setText("");
+        ventana.txtOrigEnf.setText("");
+        ventana.txtMedEnf.setText("");
+        ventana.txtSintEnf.setText("");
+
+    }
+
+    /**
      * Metodo que limpia los campos de los JTexField de centros, borrando lo que se
      * escribio en ellos
      */
@@ -610,12 +799,11 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
 
     }
 
-
     /**
      * Metodo que comprueba en que ventana nos encontramos para obtener
      * los valores que se muestran en esa ventanta
      *
-     * @param listSelectionEvent
+     * @param listSelectionEvent el parametro listSelectionEvent es de tipo ListSelectionEvent
      */
     @Override
     public void valueChanged(ListSelectionEvent listSelectionEvent) {
@@ -636,20 +824,28 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
             } else {
                 limpiarCamposMedico();
             }
-        } else {
+        } else if (ventana.JTabbedPane.getSelectedIndex() == 2) {
             Centro centro = ventana.listCentros.getSelectedValue();
             if (centro != null) {
                 mostrarValoresCentro(centro);
             } else {
                 limpiarCamposCentro();
             }
+        } else {
+            Enfermedad enfermedad = ventana.listaEnfermedades.getSelectedValue();
+            if (enfermedad != null) {
+                mostrarValoresEnfermedad(enfermedad);
+            } else {
+                limpiarCamposCentro();
+            }
         }
+
     }
 
     /**
      * Metodo que escribe en los JTextField el valor de los atributos del paciente
      *
-     * @param paciente
+     * @param paciente el parametro paciente hace referencia al paciente seleccionado
      */
     private void mostrarValoresPaciente(Paciente paciente) {
         ventana.txtNombrePaciente.setText(paciente.getNombre());
@@ -662,9 +858,21 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
     }
 
     /**
+     * Metodo que escribe en los JTextField el valor de los atributos de la enfermedad
+     *
+     * @param enfermedad el parametro enfermedad hace referencia a la enfermedad seleccionada
+     */
+    private void mostrarValoresEnfermedad(Enfermedad enfermedad) {
+        ventana.txtNombEnf.setText(enfermedad.getNombre());
+        ventana.txtOrigEnf.setText(enfermedad.getOrigen());
+        ventana.txtSintEnf.setText(enfermedad.getSintomas());
+        ventana.txtMedEnf.setText(enfermedad.getMedicamento());
+    }
+
+    /**
      * Metodo escribe en los JTextField el valor de los atributos del centro
      *
-     * @param centro
+     * @param centro el parametro centro hace referencia al centro seleccionado
      */
     private void mostrarValoresCentro(Centro centro) {
         ventana.txtNombreCentro.setText(centro.getNombreCentro());
@@ -695,7 +903,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
     /**
      * Metodo que escribe en los JTextField el valor de los atributos del medico
      *
-     * @param medico
+     * @param medico el parametro medico hace referencia al medico seleccionado
      */
     private void mostarValoresMedico(Medico medico) {
         ventana.txtDniMedico.setText(medico.getDni());
@@ -830,6 +1038,33 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
             } else {
                 Util.mostrarEjecucionCorrecta(bundle.getString("PatientNotSelected"));
             }
+        }
+    }
+
+    /**
+     * Metodo que eliminar una enfermedad de la lista de enfermedades comprobando
+     * si la lista de enfermedades no esta vacia. Si la lista no esta vacia comprueba
+     * que el usuario tenga una enfermedad seleccionada y posteriormente la elimina
+     */
+    private void eliminarEnfermedad() {
+        ArrayList<Enfermedad> listaEnfermedades = modelo.getListaEnfermedades();
+        if (listaEnfermedades.isEmpty()) {
+            Util.mensajeError(bundle.getString("EnfermedadtListEmpty"));
+        } else {
+            Enfermedad eliminada = ventana.listaEnfermedades.getSelectedValue();
+            if (eliminada != null) {
+                int opcion = Util.mostrarDialogoSiNo(bundle.getString("DeleteEnfermedadConfirm"));
+                if (opcion == Util.ACEPTAR) {
+                    listaEnfermedades.remove(eliminada);
+                    ventana.dlmEnfermedad.removeElement(eliminada);
+                    Util.mostrarEjecucionCorrecta(bundle.getString("DeleteEnfermedadOk"));
+                } else {
+                    Util.mensajeError(bundle.getString("DeleteEnfermedadNotOk"));
+                }
+            } else {
+                Util.mostrarEjecucionCorrecta(bundle.getString("EnfermedadNotSelected"));
+            }
+
         }
     }
 
@@ -1001,9 +1236,10 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
                 }
             } else {
                 if (!repetidoDni) {
-                    Paciente paciente = new Paciente(dni, nombre, apellidos, fechaNacimiento, Double.parseDouble(peso), medicoAsignado, centroAsignado);
+                    Paciente paciente = new Paciente(dni, nombre, apellidos, fechaNacimiento, Double.parseDouble(peso), medicoAsignado, centroAsignado, new ArrayList<>());
                     modelo.altaPaciente(paciente);
                     limpiarCamposPaciente();
+
                 }
                 refrescarListaPacientes();
             }
@@ -1071,6 +1307,47 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
     }
 
     /**
+     * Metodo que da de alta una nueva enfermedad en el sistema y comprueba
+     * que no existan enfermedades repetidas con un mismo nombre.
+     */
+    private void nuevaEnfermedad() {
+        boolean repetida = false;
+        String nombre = ventana.txtNombEnf.getText();
+        String sintomas = ventana.txtSintEnf.getText();
+        String origen = ventana.txtOrigEnf.getText();
+        String medicamento = ventana.txtMedEnf.getText();
+
+        if (nombre.isEmpty() || sintomas.isEmpty() || origen.isEmpty() || medicamento.isEmpty()) {
+            Util.mensajeError(bundle.getString("rellene.campos.blanco.enfermedad"));
+        } else {
+            for (Enfermedad m : modelo.getListaEnfermedades()) {
+                if (m.getNombre().equals(ventana.txtNombEnf.getText().trim())) {
+                    repetida = true;
+                }
+            }
+
+            if (repetida) {
+                Util.mensajeError("Enfermedad repetida ");
+            } else {
+                Enfermedad enfermedad = new Enfermedad(nombre, sintomas, medicamento, origen);
+                modelo.altaEnfermedad(enfermedad);
+                limpiarCamposEnfermedad();
+                refrescarListaEnfermedades();
+            }
+        }
+    }
+
+    /**
+     * Metodo que se encarga de mantener actualizada la lista de enfermedades
+     * con todas las enfermedades que hay en la lista de enfermedades.
+     */
+    private void refrescarListaEnfermedades() {
+        ventana.dlmEnfermedad.clear();
+        for (Enfermedad en : modelo.getListaEnfermedades())
+            ventana.dlmEnfermedad.addElement(en);
+    }
+
+    /**
      * Metodo que se encarga de mantener actualizada la lista de centros
      * con todos los centros que hay en la lista de centros.
      */
@@ -1092,6 +1369,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
             ventana.dlmMedico.addElement(medico);
         }
     }
+
 
     /**
      * Metodo que refresca la lista de pacientes para que este actualizada
@@ -1116,7 +1394,8 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
      * Metodo que actualiza el comboBox de Medicos en funcion
      * al centro que este seleccionado en en combobox de centros
      *
-     * @param centro
+     * @param centro el parametro centro se corresponde con el centro seleccionado
+     *               en el comboBox
      */
     private void actualizarComboBoxMedicosPorCentro(Centro centro) {
         ArrayList<Medico> listaMedicos = new ArrayList<Medico>();
@@ -1135,7 +1414,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
      * a elementos con los que el usuiario interactua
      * para cambiar el color a blanco si ganan el foco
      *
-     * @param e
+     * @param e el parametro e es de tipo FocusEvent
      */
     @Override
     public void focusGained(FocusEvent e) {
@@ -1204,7 +1483,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
      * foco en el caso de  que algun elemento este en blanco
      * o los valores numericos no sean correctos.
      *
-     * @param e
+     * @param e el parametro e es de tipo FocusEvent
      */
     @Override
     public void focusLost(FocusEvent e) {
@@ -1265,7 +1544,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
      * permitir que el combo box de medicos en funcion al centro
      * de salud seleccionado se pueda actualizar.
      *
-     * @param e
+     * @param e el parametro e es de tipo ItemEvent
      */
     @Override
     public void itemStateChanged(ItemEvent e) {
@@ -1309,6 +1588,10 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
             ventana.panelListaCentros.setBackground(color);
             ventana.datosImagenCentro.setBackground(color);
             ventana.panelBotonesCentros.setBackground(color);
+            ventana.panelDatosEnfermedades.setBackground(color);
+            ventana.panelBotonesEnfermedad.setBackground(color);
+            ventana.panelEnfermedadPequeno.setBackground(color);
+            ventana.panelBotonDeEnfermedad.setBackground(color);
         } else {
             try {
                 documento.createNewFile();
@@ -1316,7 +1599,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
                 properties.setProperty("idioma", "es");
                 properties.setProperty("pais", "ES");
                 try {
-                    properties.store(new FileWriter(documento),"Documento de Preferencias");
+                    properties.store(new FileWriter(documento), "Documento de Preferencias");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -1341,6 +1624,10 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
                 ventana.panelListaCentros.setBackground(color);
                 ventana.datosImagenCentro.setBackground(color);
                 ventana.panelBotonesCentros.setBackground(color);
+                ventana.panelDatosEnfermedades.setBackground(color);
+                ventana.panelBotonesEnfermedad.setBackground(color);
+                ventana.panelEnfermedadPequeno.setBackground(color);
+                ventana.panelBotonDeEnfermedad.setBackground(color);
 
             } catch (IOException e) {
                 e.printStackTrace();

@@ -7,7 +7,8 @@ import java.io.Serializable;
  * instancias se puedan guardar en un fichero binario
  *
  * @author Raquel
- *
+ * @version 1
+ * @since 16/02/2021
  */
 public class Medico implements Serializable {
 
@@ -21,11 +22,11 @@ public class Medico implements Serializable {
     /**
      * Constructor de la clase medico
      *
-     * @param dni
-     * @param nombre
-     * @param apellido
-     * @param edad
-     * @param esHombre
+     * @param dni      el parametro se corresponde con el dni que tenga un medico
+     * @param nombre   el parametro se corresponde con el nombre que tenga un medico
+     * @param apellido el parametro se corresponde con el apellido que tenga un medico
+     * @param edad     el parametro se corresponde con la edad que tenga un medico
+     * @param esHombre el parametro se corresponde con el genero que tenga un medico
      */
     public Medico(String dni, String nombre, String apellido, int edad, Boolean esHombre) {
         super();
@@ -36,14 +37,16 @@ public class Medico implements Serializable {
         this.esHombre = esHombre;
 
     }
+
     /**
-     * Constructor de la clase medico con un centro
+     * Constructor de la clase medico con un centro de salud asignado
      *
-     * @param dni
-     * @param nombre
-     * @param apellido
-     * @param edad
-     * @param esHombre
+     * @param dni      el parametro se corresponde con el dni que tenga un medico
+     * @param nombre   el parametro se corresponde con el nombre que tenga un medico
+     * @param apellido el parametro se corresponde con el apellido que tenga un medico
+     * @param edad     el parametro se corresponde con la edad que tenga un medico
+     * @param esHombre el parametro se corresponde con el genero que tenga un medico
+     * @param centro   el parametro se corresponde con el centro de salud que tenga un medico asignado
      */
     public Medico(String dni, String nombre, String apellido, int edad, Boolean esHombre, Centro centro) {
         super();
@@ -67,7 +70,7 @@ public class Medico implements Serializable {
     /**
      * Metodo que permite cambiar el dni asociado a un medico
      *
-     * @param dni
+     * @param dni el parametro hace referencia al nuevo dni del medico
      */
     public void setDni(String dni) {
         this.dni = dni;
@@ -85,7 +88,7 @@ public class Medico implements Serializable {
     /**
      * Medodo que permite cambiar el nombre asociado a un medico
      *
-     * @param nombre
+     * @param nombre el parametro hace referencia al nuevo nombre del medico
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -103,7 +106,7 @@ public class Medico implements Serializable {
     /**
      * Metodo que permite cambiar el apellido asociado a un medico
      *
-     * @param apellido
+     * @param apellido el parametro hace referencia al nuevo apellido del medico
      */
     public void setApellido(String apellido) {
         this.apellido = apellido;
@@ -121,7 +124,7 @@ public class Medico implements Serializable {
     /**
      * Metodo que permite cambiar la edad asociada a un medico
      *
-     * @param edad
+     * @param edad el parametro hace referencia a la nueva edad del medico
      */
     public void setEdad(int edad) {
         this.edad = edad;
@@ -129,6 +132,7 @@ public class Medico implements Serializable {
 
     /**
      * Metodo que devuelve el Centro en el que trabaja el medico
+     *
      * @return centro
      */
     public Centro getCentro() {
@@ -137,7 +141,8 @@ public class Medico implements Serializable {
 
     /**
      * Metodo que permite cambiar el centro en el que trabaja un medico
-     * @param centro
+     *
+     * @param centro el parametro hace referencia al nuevo centro del medico
      */
     public void setCentro(Centro centro) {
         this.centro = centro;
@@ -147,7 +152,6 @@ public class Medico implements Serializable {
      * Metodo que devuelve un booleano que indica el genero de un medico
      *
      * @return genero
-
      */
     public Boolean getEsHombre() {
         return esHombre;
@@ -156,7 +160,7 @@ public class Medico implements Serializable {
     /**
      * Metodo que permite cambiar el genero de un medico
      *
-     * @param esHombre
+     * @param esHombre el parametro hace referencia al nuevo genero del medico
      */
     public void setEsHombre(Boolean esHombre) {
         this.esHombre = esHombre;
@@ -165,15 +169,11 @@ public class Medico implements Serializable {
     /**
      * Metodo que devuelve una cadena con los atributos de un medico
      *
-     * @return dni
-     * @return nombre
-     * @return apellido
-     * @return edad
-     * @return esHombre
+     * @return dni del medico , el nombre del medico y el apellido
      */
     @Override
     public String toString() {
-        return "DNI: " + dni + "\n"+ " NOMBRE: " + nombre + " " + apellido;
+        return "DNI: " + dni.toUpperCase() + "\n" + " NOMBRE: " + nombre.toUpperCase() + " " + apellido.toUpperCase();
     }
 
 }

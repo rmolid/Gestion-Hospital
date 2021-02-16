@@ -16,6 +16,8 @@ import java.util.ResourceBundle;
  * del idioma y el color de la aplicacion y guardar y cargar dicha configuracion
  *
  * @author Raquel Molina Diaz
+ * @version 1
+ * @since 16/02/2021
  */
 public class Preferencias extends JDialog {
     private JPanel contentPane;
@@ -23,7 +25,7 @@ public class Preferencias extends JDialog {
     private JButton buttonCancel;
     private JLabel lblTituloPreferencias;
     private JRadioButton espanholRadioButton;
-    private JRadioButton inglésRadioButton;
+    private JRadioButton inglesRadioButton;
     private JLabel lblEspanha;
     private JLabel lblTemaAplicacion;
     private JButton botSelecionarTema;
@@ -143,7 +145,6 @@ public class Preferencias extends JDialog {
         }
     }
 
-
     /**
      * Metodo que carga los ultimos valores del archivo preferencias.conf
      * guardados y los aplica al iniciar la aplicacion.
@@ -157,7 +158,7 @@ public class Preferencias extends JDialog {
             if(pais.equals("ES")){
                 espanholRadioButton.setSelected(true);
             }else {
-                inglésRadioButton.setSelected(true);
+                inglesRadioButton.setSelected(true);
             }
             colorDefecto = new Color(Integer.parseInt(properties.getProperty("color")));
             lblGuardarColor.setBackground(colorDefecto);

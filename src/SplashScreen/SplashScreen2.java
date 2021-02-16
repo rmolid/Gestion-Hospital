@@ -1,9 +1,6 @@
 package SplashScreen;
 
 import java.awt.*;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -11,11 +8,21 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
+/**
+ * Clase SplashScreen que permite crear una pantalla de carga para la aplicacion
+ *
+ * @author Fernando Valdeón
+ * @version 1
+ * @since 16/02/2021
+ */
 public class SplashScreen2 extends JDialog implements Runnable{
 
 	private static final long serialVersionUID = 1L;
 	private JProgressBar barraProgreso;
-	
+
+	/**
+	 * Contuctor de la clase que crea una SplashScreen para la aplicacion
+	 */
 	public SplashScreen2() {
 		setBounds(100, 100, 400, 300);
 		
@@ -26,8 +33,6 @@ public class SplashScreen2 extends JDialog implements Runnable{
 		//Creo una etiqueta con la imagen en el centro
 		JLabel lblImagen = new JLabel();
 		//Indico la imagen que quiero mostrar en la label
-
-
 
         lblImagen.setIcon(new ImageIcon(SplashScreen2.class.getResource("/imagencarga.gif")));
 
@@ -54,14 +59,16 @@ public class SplashScreen2 extends JDialog implements Runnable{
 		setLocationRelativeTo(null); //Mostrar en el centro
 		setVisible(true);
 	}
-	
-	//Metodo implementado por Runnable
+
+	/**
+	 * Metodo run que contiene las acciones propias del hilo
+	 */
 	@Override
 	public void run() {
 	   try {
               //Cada 20ms avanzamos la barra de progreso 0-100
               for(int i = 0; i < 100; i++) {
-                 Thread.sleep(55);
+                 Thread.sleep(45);
                  barraProgreso.setValue(i);
               }
            } catch (InterruptedException ie) {

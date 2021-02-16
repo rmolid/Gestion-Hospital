@@ -2,12 +2,15 @@ package base;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * Clase Paciente que representa un Paciente. Implementa Serializale para que
- * sus instancias puedan ser guardades en un fichero binario
+ * sus instancias puedan ser guardades en un fichero binario.
  *
  * @author Raquel
+ * @version 1
+ * @since 16/02/2021
  */
 public class Paciente implements Serializable {
 
@@ -18,15 +21,16 @@ public class Paciente implements Serializable {
     private double peso;
     private Medico medico;
     private Centro centro;
+    private ArrayList<Enfermedad> enfermedadesPaciente;
 
     /**
-     * Constructor de la clase paciente
+     * Constructor de la clase paciente que nos permite crear instancias de dicho objeto
      *
-     * @param dni
-     * @param nombre
-     * @param apellidos
-     * @param fechaNacimiento
-     * @param peso
+     * @param dni             el parametro hace referencia al dni de un paciente
+     * @param nombre          el parametro hace referencia al nombre de un paciente
+     * @param apellidos       el parametro hace referencia a los apellidos de un paciente
+     * @param fechaNacimiento el parametro hace referencia a la fecha de nacimiento de un paciente
+     * @param peso            el parametro hace referencia al peso de un paciente
      */
     public Paciente(String dni, String nombre, String apellidos, LocalDate fechaNacimiento, double peso) {
         super();
@@ -38,18 +42,18 @@ public class Paciente implements Serializable {
     }
 
     /**
-     * Constructor de la clase paciente que asocia un medico al paciente
+     * Constructor de la calse paciente con un centro, medico y enfermedades
      *
-     * @param dni
-     * @param nombre
-     * @param apellidos
-     * @param fechaNacimiento
-     * @param peso
-     * @param medico
+     * @param dni                   el parametro hace referencia al dni de un paciente
+     * @param nombre                el parametro hace referencia al nombre de un paciente
+     * @param apellidos             el parametro hace referencia a los apellidos de un paciente
+     * @param fechaNacimiento       el parametro hace referencia a la fehca de nacimiento de un paciente
+     * @param peso                  el parametro hace referencia al peso de un paciente
+     * @param medico                el parametro hace referencia medico que tenga un paciente
+     * @param centro                el parametro hace referencia al centro que tenga un paciente
+     * @param enfermedaadesPaciente el parametro hace referencia al conjunto de enfermedades de un paciente
      */
-    public Paciente(String dni, String nombre, String apellidos, LocalDate fechaNacimiento, double peso,
-                    Medico medico, Centro centro) {
-        super();
+    public Paciente(String dni, String nombre, String apellidos, LocalDate fechaNacimiento, double peso, Medico medico, Centro centro, ArrayList<Enfermedad> enfermedaadesPaciente) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -57,12 +61,31 @@ public class Paciente implements Serializable {
         this.peso = peso;
         this.medico = medico;
         this.centro = centro;
+        this.enfermedadesPaciente = enfermedaadesPaciente;
+    }
 
+    /**
+     * Metodo que retorna un ArrayList que contiene las enfermedades que padece un paciente
+     *
+     * @return enfermedadesPaciente conjunto de enfermedades que padece un paciente
+     */
+    public ArrayList<Enfermedad> getEnfermedaadesPaciente() {
+        return enfermedadesPaciente;
+    }
+
+    /**
+     * Metodo que permite modificar las enfermedades que padece un paciente
+     *
+     * @param enfermedaadesPaciente el parametro representa las nuevas enfermedades del paciente
+     */
+    public void setEnfermedaadesPaciente(ArrayList<Enfermedad> enfermedaadesPaciente) {
+        this.enfermedadesPaciente = enfermedaadesPaciente;
     }
 
     /**
      * Metodo que devuelve el centro asociado a un paciente
-     * @return centro
+     *
+     * @return centro que tiene asignado un paciente
      */
     public Centro getCentro() {
         return centro;
@@ -70,7 +93,8 @@ public class Paciente implements Serializable {
 
     /**
      * Metodo que permite cambiar el centro asociado a un paciente
-     * @param centro
+     *
+     * @param centro el parametro hace referencia al nuevo centro del paciente
      */
     public void setCentro(Centro centro) {
         this.centro = centro;
@@ -88,7 +112,7 @@ public class Paciente implements Serializable {
     /**
      * Metodo que permite cambiar el dni asociado a un paciente
      *
-     * @param dni
+     * @param dni el parametro se corresponde con el nuevo dni de un paciente
      */
     public void setDni(String dni) {
         this.dni = dni;
@@ -106,7 +130,7 @@ public class Paciente implements Serializable {
     /**
      * Metodo que permite cambiar el nombre asociado a un paciente
      *
-     * @param nombre
+     * @param nombre el parametro se corresponde con el nuevo nombre del paciente
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -125,7 +149,7 @@ public class Paciente implements Serializable {
     /**
      * Metodo que permite cambiar los apellidos asociados a un paciente
      *
-     * @param apellidos
+     * @param apellidos el parametro hace referencia a los nuevos apellidos de un paciente
      */
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
@@ -144,7 +168,7 @@ public class Paciente implements Serializable {
     /**
      * Metodo que permite cambiar la fecha de nacimiento asociada a un paciente
      *
-     * @param fechaNacimiento
+     * @param fechaNacimiento el parametro hace referencia a la nueva fecha de nacimiento de un paciente
      */
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
@@ -162,7 +186,7 @@ public class Paciente implements Serializable {
     /**
      * Metodo que permite cambiar el peso asociado a un paciente
      *
-     * @param peso
+     * @param peso el parametro hace referencia al nuevo peso de un paciente
      */
     public void setPeso(double peso) {
         this.peso = peso;
@@ -172,7 +196,7 @@ public class Paciente implements Serializable {
      * Metodo que devuelve un objeto de tipo Medico que se corresponde con el medico
      * asociado a un paciente
      *
-     * @return
+     * @return medico
      */
     public Medico getMedico() {
         return medico;
@@ -181,7 +205,7 @@ public class Paciente implements Serializable {
     /**
      * Metodo que permite cambiar el medico asociado a un paciente
      *
-     * @param medico
+     * @param medico el parametro hace referencia al nuevo medico de un paciente
      */
     public void setMedico(Medico medico) {
         this.medico = medico;
@@ -191,17 +215,16 @@ public class Paciente implements Serializable {
      * Metodo que devuelve una cadena con los atributos asociados a un paciente, el
      * cual puede tener un medico asociado o no.
      *
-     * @return medico
+     * @return dni del paciente y nombre y apellidos de este
      */
     @Override
     public String toString() {
         // Todo si tiene medico
         if (medico != null) {
-            return "Dni: " + dni.toUpperCase() + " Nombre y apellidos: " + nombre.toUpperCase() + " " + apellidos.toUpperCase();
+            return "DNI: " + dni.toUpperCase() + " NOMBRE Y APELLIDOS: " + nombre.toUpperCase() + " " + apellidos.toUpperCase();
         } else {
-            return "Dni: " + dni.toUpperCase() + " Nombre y apellidos: " + nombre.toUpperCase() + " " + apellidos.toUpperCase();
+            return "DNI: " + dni.toUpperCase() + " NOMBRE Y APELLIDOS: " + nombre.toUpperCase() + " " + apellidos.toUpperCase();
         }
 
     }
-
 }

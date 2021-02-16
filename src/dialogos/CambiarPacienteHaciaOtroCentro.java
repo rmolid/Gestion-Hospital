@@ -15,6 +15,8 @@ import java.util.ArrayList;
  * lo que requiere que se reasigne el nuevo centro y nuevo medico.
  *
  * @author Raquel Molina Diaz
+ * @version 1
+ * @since 16/02/2021
  */
 public class CambiarPacienteHaciaOtroCentro extends JDialog implements ItemListener {
     private JPanel contentPane;
@@ -27,8 +29,8 @@ public class CambiarPacienteHaciaOtroCentro extends JDialog implements ItemListe
     private JTextField txtApellido;
     private JTextField txtDNI;
     private JLabel lblMedicos;
-    private JComboBox cbMedicos;
-    private JComboBox cbCentro;
+    private JComboBox<Medico> cbMedicos;
+    private JComboBox<Centro> cbCentro;
     private DefaultComboBoxModel<Medico> dcbmMedicos;
     private DefaultComboBoxModel<Centro> dcbmCentros;
     private JLabel lblCentro;
@@ -40,10 +42,10 @@ public class CambiarPacienteHaciaOtroCentro extends JDialog implements ItemListe
     /**
      * Constructor de la clase CambiarPacienteHaciaOtroCentro
      *
-     * @param paciente
-     * @param listaMedicos
-     * @param listaCentros
-     * @param centro
+     * @param paciente     el parametro paciente hace referencia al paciente con el que se va a trabajar
+     * @param listaMedicos el parametro listaMedicos hace referencia a todos los medicos que hay en el modelo
+     * @param listaCentros el parametro listaCentros hace referencia a todos los centros que hay en el modelo
+     * @param centro       el parametro centro hace referencia al centro actual del paciente con el que se trabaja
      */
     public CambiarPacienteHaciaOtroCentro(Paciente paciente, ArrayList<Medico> listaMedicos, ArrayList<Centro> listaCentros, Centro centro) {
         this.listaCentros = listaCentros;
@@ -64,7 +66,7 @@ public class CambiarPacienteHaciaOtroCentro extends JDialog implements ItemListe
     /**
      * Metodo que asocia un ItemListener a los elementos con los cuales el usuario va a interactuar
      *
-     * @param listener
+     * @param listener el parametro se corresponde con un ItemListener asociado al comboBox
      */
     private void initItemListener(ItemListener listener) {
         cbCentro.addItemListener(listener);
@@ -107,7 +109,7 @@ public class CambiarPacienteHaciaOtroCentro extends JDialog implements ItemListe
     }
 
     /**
-     * Metodo que inicia el combo box y le asigna un modelo
+     * Metodo que inicializa los DefaultComboBoxModel y les setea un modelo a a los comboBox
      */
     private void iniciarCombos() {
         dcbmCentros = new DefaultComboBoxModel<Centro>();
@@ -157,7 +159,8 @@ public class CambiarPacienteHaciaOtroCentro extends JDialog implements ItemListe
      * Metodo que asocia un ItemEvent para poder actualizar el comboBox de Medicos
      * en funcion al centro seleccionado
      *
-     * @param e
+     * @param e el parametro de corresponde con un ItemEven que permite actualizar el combo de medicos
+     *          en funcion del centro seleccionado en el comboBox de centros de salud
      */
     @Override
     public void itemStateChanged(ItemEvent e) {
@@ -168,7 +171,7 @@ public class CambiarPacienteHaciaOtroCentro extends JDialog implements ItemListe
      * Metodo que se encarga de actualizar el comboBox de medicos
      * en funcion al centro que este seleccionado.
      *
-     * @param centro
+     * @param centro el parametro centro hace referencia al centro seleccionado en el comboBox
      */
     private void actualizarComboBoxMedicosPorCentro(Centro centro) {
         ArrayList<Medico> listadoMedicos = new ArrayList<Medico>();

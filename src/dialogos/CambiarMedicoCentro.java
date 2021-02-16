@@ -14,6 +14,8 @@ import java.util.ResourceBundle;
  * hacia otro centro de salud.
  *
  * @author Raquel Molina Diaz
+ * @version 1
+ * @since 16/02/2021
  */
 public class CambiarMedicoCentro extends JDialog {
     private JPanel contentPane;
@@ -37,8 +39,8 @@ public class CambiarMedicoCentro extends JDialog {
     /**
      * Constructor de la clase CambiarMedicoCentro
      *
-     * @param medico
-     * @param centros
+     * @param medico  el parametro hace referencia al medico que va a ser cambiado de centro
+     * @param centros el parametro centros es una lista que contine todos los centros de salud del modelo
      */
     public CambiarMedicoCentro(Medico medico, ArrayList<Centro> centros) {
         bundle = ResourceBundle.getBundle("idiomaResourcebundle");
@@ -52,7 +54,7 @@ public class CambiarMedicoCentro extends JDialog {
     }
 
     /**
-     * Metodo que inicializa el JDialog
+     * Metodo que inicializa el cuadro de dialogo
      */
     private void initDialog() {
         setContentPane(contentPane);
@@ -100,8 +102,7 @@ public class CambiarMedicoCentro extends JDialog {
     }
 
     /**
-     * Metodo que lista los centros que hay en la lista de centros
-     * en el combo box
+     * Metodo que lista los centros que hay en la lista de centros en el combobox
      */
     private void listarCentrosCombo() {
         for (Centro c : listaCentros) {

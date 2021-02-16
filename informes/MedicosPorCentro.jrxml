@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MedicosPorCentro" pageWidth="790" pageHeight="842" columnWidth="750" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="13acf49e-4913-4d1b-bccc-113817ad15d1">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="dni" class="java.lang.String">
+		<fieldDescription><![CDATA[dni]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[nombre]]></fieldDescription>
+	</field>
+	<field name="apellido" class="java.lang.String">
+		<fieldDescription><![CDATA[apellido]]></fieldDescription>
+	</field>
+	<field name="edad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[edad]]></fieldDescription>
+	</field>
+	<field name="esHombre" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[esHombre]]></fieldDescription>
+	</field>
+	<field name="centro" class="base.Centro">
+		<fieldDescription><![CDATA[centro]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="132" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="750" height="95" backcolor="#85FFC4" uuid="6c6ca4e1-17cd-4913-93d6-5e670ea9ae8a"/>
+				<staticText>
+					<reportElement style="Title" x="5" y="14" width="558" height="66" forecolor="#000000" uuid="a2a2cac8-5a7d-4487-8c54-dab235ce4e21"/>
+					<textElement>
+						<font fontName="MS Reference Sans Serif" size="35" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Registro de médicos]]></text>
+				</staticText>
+				<image>
+					<reportElement x="600" y="10" width="86" height="74" uuid="b992d93d-98db-475f-a95e-7417c53e864a"/>
+					<imageExpression><![CDATA["imagenes/hospital_Informe.png"]]></imageExpression>
+				</image>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="-1" y="90" width="751" height="32" forecolor="#000000" backcolor="#5C9DD6" uuid="e3c14156-5b51-4201-918b-97fdc012e5d4"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="595" y="6" width="144" height="20" forecolor="#000000" uuid="5c3301e7-a737-4c59-8a2f-a6c79fd1adb8"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="57" splitType="Stretch">
+			<staticText>
+				<reportElement x="30" y="7" width="100" height="30" uuid="ed0bbc6f-a1f8-4c4a-9032-3492ec3c2230">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="76c1025c-80ef-4dee-abec-3c233dcb615c"/>
+				</reportElement>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DNI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="128" y="7" width="100" height="30" uuid="0b63b4a8-a9fb-4d1a-9286-87579fc7c712">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="538ad031-ff20-4fa8-a0d8-3c314c324e3b"/>
+				</reportElement>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="7" width="100" height="30" uuid="ba9a17b4-3f21-4fcb-990c-0a11a387f438">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c31245aa-e690-40b3-a3f7-a67b05d49fd4"/>
+				</reportElement>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APELLIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="328" y="7" width="100" height="30" uuid="e5fe8416-4588-4a67-ad32-35558c9e889c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6a41ed2e-7d39-4ebc-bc1e-d89652e14a8f"/>
+				</reportElement>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="436" y="7" width="100" height="30" uuid="52932321-9108-4116-b769-6d8df1798d76">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4bce28f6-eb6e-4589-babc-ae0a046d2dfc"/>
+				</reportElement>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GÉNERO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="546" y="7" width="100" height="30" uuid="81e35618-a5ac-448c-af64-cf9d1d60f513">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="463f7724-77ae-4e75-ad69-4c134a42e964"/>
+				</reportElement>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CENTRO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="660" y="10" width="100" height="30" uuid="3c8978e1-95ad-4ef8-9ba3-32a445fa8740">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="463f7724-77ae-4e75-ad69-4c134a42e964"/>
+				</reportElement>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRIVADO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="44" splitType="Stretch">
+			<textField>
+				<reportElement x="29" y="7" width="100" height="30" uuid="19df6028-03d1-4ae6-b3a9-ca1fe82ed3b3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="76c1025c-80ef-4dee-abec-3c233dcb615c"/>
+				</reportElement>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dni}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="7" width="100" height="30" uuid="06117089-c37f-4621-bfdf-2db367c0d468">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="538ad031-ff20-4fa8-a0d8-3c314c324e3b"/>
+				</reportElement>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="232" y="7" width="100" height="30" uuid="ca075f66-dcea-442a-9524-2ced14dbb248">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c31245aa-e690-40b3-a3f7-a67b05d49fd4"/>
+				</reportElement>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="332" y="7" width="100" height="30" uuid="1c998f9a-7e5c-4433-ac0f-8653dd24a5f4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6a41ed2e-7d39-4ebc-bc1e-d89652e14a8f"/>
+				</reportElement>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{edad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="438" y="7" width="100" height="30" uuid="62dccf97-26e4-4d3a-b90c-932560be0d44">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4bce28f6-eb6e-4589-babc-ae0a046d2dfc"/>
+				</reportElement>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{esHombre}.equals(true) ? ("HOMBRE") : ("MUJER")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="545" y="7" width="100" height="30" uuid="fe9e86ba-0386-4cff-ae2c-3f04bafb4798">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="463f7724-77ae-4e75-ad69-4c134a42e964"/>
+				</reportElement>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{centro}.getNombreCentro()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="660" y="7" width="100" height="30" uuid="d8594abb-05f5-48cd-ae2e-234502850e1f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fbd50be3-5f68-4464-8116-9fee30c5711a"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{centro}.getEsPrivado().equals(true) ? ("SI") : ("NO")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="297" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="1133a906-5b71-476e-9f3e-bc97c97058c1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="30" y="44" width="269" height="31" forecolor="#000033" backcolor="rgba(153, 204, 153, 0.0)" uuid="bed229ba-3e1b-4ae6-849f-00fa8ef76b5e"/>
+				<textElement>
+					<font fontName="Arial Black" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Edad de los médicos]]></text>
+			</staticText>
+			<bar3DChart>
+				<chart evaluationTime="Report">
+					<reportElement x="30" y="80" width="330" height="180" uuid="082d21b0-36c0-42d4-90fc-175b485b1a76"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset resetType="Report"/>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{nombre}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nombre} + " " + $F{apellido}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{edad}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+			<image>
+				<reportElement x="390" y="60" width="260" height="200" uuid="01c862b0-df55-4e29-b40b-40429bdb78a1"/>
+				<imageExpression><![CDATA["imagenes/medicosFoto.png"]]></imageExpression>
+			</image>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="1" width="750" height="24" forecolor="#D0B48E" backcolor="#000000" uuid="729c3539-f946-4d0e-a0a7-bda2815ea1b0"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="690" y="-1" width="40" height="20" forecolor="#FFFFFF" uuid="4834e99c-7f6c-485a-b098-50e5187f2ab4"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="610" y="-1" width="80" height="20" forecolor="#FFFFFF" uuid="9825b46e-76f1-469a-abb8-a1cc27aad685"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="1" width="197" height="20" forecolor="#FFFFFF" uuid="137d38c7-1a83-4fc5-b156-9d5f1b1a0ddc"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

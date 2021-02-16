@@ -13,25 +13,30 @@ import java.util.ResourceBundle;
 /**
  * La clase Util se encarga de almacenar los diferentes JOption Pane y
  * el metodo que permite obtener el idioma y el pais de la aplicacion.
+ *
+ * @author Raquel Molina Diaz
+ * @version 1
+ * @since 16/02/2021
  */
 public class Util {
 
     public static final int ACEPTAR = JOptionPane.OK_OPTION;
     public static final int CANCELAR = JOptionPane.CANCEL_OPTION;
-    private static final ResourceBundle BUNDLE =  ResourceBundle.getBundle("idiomaResourcebundle");
+    private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("idiomaResourcebundle");
 
     /**
      * Metodo que permite crear un JOptionPane mostrando un mensaje de error
-     * @param mensaje
+     *
+     * @param mensaje el parametro hace referencia al mensaje que se va a mostrar el JOptionPane
      */
-    public static void mensajeError(String mensaje){
+    public static void mensajeError(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje, BUNDLE.getString("JOptionPane.Error"), JOptionPane.ERROR_MESSAGE);
     }
 
     /**
      * Metodo que permite mostrar un JOptionPane con dos opciones, para confirmar algo o cancelar.
      *
-     * @param mensaje
+     * @param mensaje el parametro hace referencia al mensaje que va a mostrar el JOptionPane
      * @return JOptionPane
      */
     public static int mostrarDialogoSiNo(String mensaje) {
@@ -40,13 +45,16 @@ public class Util {
 
     /**
      * Metodo que permite mostrar un JOptionPane de informacion.
-     * @param mensaje
+     *
+     * @param mensaje el parametro hace referencia al mensaje que va a mostrar el JOptionPane
      */
-    public static void mostrarEjecucionCorrecta(String mensaje){
-         JOptionPane.showMessageDialog(null, mensaje, BUNDLE.getString("JOptionPane.Correcto"), JOptionPane.INFORMATION_MESSAGE);
+    public static void mostrarEjecucionCorrecta(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, BUNDLE.getString("JOptionPane.Correcto"), JOptionPane.INFORMATION_MESSAGE);
     }
 
-
+    /**
+     * Metodo que crea un un directorio y un fichero para guardar la configuracion de preferecias de la aplicacion
+     */
     public static void createPreferences() {
         Properties properties = new Properties();
         File d = new File("./data");
@@ -64,7 +72,7 @@ public class Util {
                 properties.setProperty("idioma", "es");
                 properties.setProperty("pais", "ES");
                 try {
-                    properties.store(new FileWriter(documento),"Documento de Preferencias");
+                    properties.store(new FileWriter(documento), "Documento de Preferencias");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -80,14 +88,15 @@ public class Util {
                 e.printStackTrace();
             }
 
-    }}
-
+        }
+    }
 
 
     /**
      * Metodo que permite obtener el un ojeto de tipo Locale con el pais
      * y el idioma de la aplicacion.
-     * @return locale
+     *
+     * @return locale objeto de tipo locale que se corresponde con el idioma y el pais
      */
     public static Locale obtenerLocale() {
         Locale locale = null;
@@ -97,7 +106,7 @@ public class Util {
             properties.load(new FileReader("data/preferencias.conf"));
             String pais = properties.getProperty("pais");
 
-            if(pais.equals("UK")){
+            if (pais.equals("UK")) {
                 locale = new Locale("en", "UK");
             }
 
@@ -105,7 +114,7 @@ public class Util {
             e.printStackTrace();
         }
         //Coger un idioma por defecto
-        if(locale == null){
+        if (locale == null) {
             locale = new Locale("es", "ES");
         }
         return locale;
