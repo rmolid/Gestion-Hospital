@@ -10,6 +10,8 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import org.icepdf.ri.common.SwingController;
+import org.icepdf.ri.common.SwingViewBuilder;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
@@ -137,7 +139,6 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
         ventana.botTiposGraficas.addActionListener(listener);
 
         //Enfermedades
-
         ventana.botNuevaEnferm.addActionListener(listener);
         ventana.botModifEnferme.addActionListener(listener);
         ventana.botEliminarEnferm.addActionListener(listener);
@@ -150,7 +151,10 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
         ventana.botInformes.addActionListener(listener);
         ventana.botInformeCentros.addActionListener(listener);
         ventana.botTodosLosInformes.addActionListener(listener);
+
+        //Documentacion
         ventana.botJavadoc.addActionListener(listener);
+        ventana.botManualUso.addActionListener(listener);
     }
 
     /**
@@ -361,22 +365,50 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
                 ArrayList<Centro> listaCentros = modelo.getListaCentros();
                 ArrayList<Medico> listaMedicos = modelo.getListaMedicos();
                 DialogoGenerarInformes dialog = new DialogoGenerarInformes(listaCentros, listaMedicos);
-            }
-
-            case"verJavaDoc":{
-                System.out.println("javadoc");
-
-                ventana.botJavadoc.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-                try {
-                    Desktop.getDesktop().browse(new URI("index.html"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
-                }
                 break;
             }
+
+            case "verJavaDoc": {
+
+                mostrarJavadoc();
+                break;
+
+            }
+            case "ManualUso": {
+                mostrarManualUso();
+                break;
+            }
+
+        }
+    }
+
+
+    /**
+     * Metodo que muestra el manual de uso de la aplicacion en un JPanel
+     */
+    private void mostrarManualUso() {
+        SwingController controller = new SwingController();
+        SwingViewBuilder factory = new SwingViewBuilder(controller);
+        JPanel viewerPanel = factory.buildViewerPanel();
+        JFrame frame = new JFrame(bundle.getString("manual.uso"));
+        frame.setContentPane(viewerPanel);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        controller.openDocument("GestionHospitalManualUso.pdf");
+    }
+
+    /**
+     * Este metodo abre el navegador y muestra la documentacion javadoc de la aplicacion
+     */
+    private void mostrarJavadoc() {
+        ventana.botJavadoc.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        try {
+            Desktop.getDesktop().browse(new URI("https://raw.githack.com/rmolid/Gestion-Hospital/master/javadoc/index.html"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
     }
 
@@ -385,7 +417,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
      */
     private void mostrarInformesCentros() {
         try {
-            JasperCompileManager.compileReportToFile("informes/CentrosDeSalud.jrxml");
+            //JasperCompileManager.compileReportToFile("informes/CentrosDeSalud.jrxml");
             JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/CentrosDeSalud.jasper"));
             JRBeanCollectionDataSource coleccion = new JRBeanCollectionDataSource(modelo.getListaCentros());
             JasperPrint jPrint = JasperFillManager.fillReport(report, null, coleccion);
@@ -400,7 +432,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
      */
     private void mostrarInformeMedicos() {
         try {
-            JasperCompileManager.compileReportToFile("informes/MedicosPorCentro.jrxml");
+            //JasperCompileManager.compileReportToFile("informes/MedicosPorCentro.jrxml");
             JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/MedicosPorCentro.jasper"));
             JRBeanCollectionDataSource coleccion = new JRBeanCollectionDataSource(modelo.getListaMedicos());
             JasperPrint jPrint = JasperFillManager.fillReport(report, null, coleccion);

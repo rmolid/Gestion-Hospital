@@ -159,7 +159,7 @@ public class CambiarPacienteHaciaOtroCentro extends JDialog implements ItemListe
      * Metodo que asocia un ItemEvent para poder actualizar el comboBox de Medicos
      * en funcion al centro seleccionado
      *
-     * @param e el parametro de corresponde con un ItemEven que permite actualizar el combo de medicos
+     * @param e el parametro e se corresponde con un ItemEven que permite actualizar el combo de medicos
      *          en funcion del centro seleccionado en el comboBox de centros de salud
      */
     @Override

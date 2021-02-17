@@ -98,6 +98,15 @@
               <toolTipText resource-bundle="idiomaResourcebundle" key="ver.javador"/>
             </properties>
           </component>
+          <component id="1145" class="javax.swing.JButton" binding="botManualUso">
+            <constraints/>
+            <properties>
+              <actionCommand value="ManualUso"/>
+              <icon value="book.png"/>
+              <text value=""/>
+              <toolTipText resource-bundle="idiomaResourcebundle" key="mostrar.manual.uso"/>
+            </properties>
+          </component>
         </children>
       </grid>
       <tabbedpane id="3132f" binding="JTabbedPane">

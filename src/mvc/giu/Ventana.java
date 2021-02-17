@@ -125,6 +125,8 @@ public class Ventana {
     JButton botInformeCentros;
     JButton botTodosLosInformes;
     JButton botJavadoc;
+    JButton botManualUso;
+
 
 
     /**
@@ -268,6 +270,12 @@ public class Ventana {
         //INFORMES
         botInformeCentros.setMnemonic(KeyEvent.VK_C);
         botInformes.setMnemonic(KeyEvent.VK_I);
+        botTodosLosInformes.setMnemonic(KeyEvent.VK_T);
+
+
+        //Documentacion
+        botJavadoc.setMnemonic(KeyEvent.VK_J);
+        botManualUso.setMnemonic(KeyEvent.VK_U);
         //Aceleradores del Menu
         itemCargar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
         itemGuardar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));

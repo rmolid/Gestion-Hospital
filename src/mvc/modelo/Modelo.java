@@ -45,6 +45,7 @@ public class Modelo {
      * @param apellidos el parametro apellidos se corresponde con los apellidos de un medico
      * @param edad      el parametro edad se corresponde con la edad de un medico
      * @param sexo      el parametro sexo se corresponde con el genero de un medico
+     * @param centro    el parametros centro se corresponde con el centro que tenga asignado un paciente
      */
     public void altaMedico(String dni, String nombre, String apellidos, int edad, Boolean sexo, Centro centro) {
         Medico medico = new Medico(dni, nombre, apellidos, edad, sexo, centro);
@@ -109,8 +110,8 @@ public class Modelo {
     }
 
     /**
-     * Metodo que devuelve un ArrayList de objetos Enfermedad
-     * que contiene todos las enfermedades que hay en la aplicacion en ese momento
+     * Metodo que devuelve una lista de enfermedades que contiene todas
+     * las enfermedades que hay en la aplicacion en ese momento
      *
      * @return listaEnfermedades
      */
@@ -124,6 +125,7 @@ public class Modelo {
      *
      * @param file el parametro file hace referencia al fichero que contiene los datos que se van a cargar
      * @throws ClassNotFoundException el metodo puede lanzar una excepcion del tipo ClassNotFoundException
+     * si no encuentra el fichero
      */
     public void cargarDatos(File file) throws ClassNotFoundException {
         try {
@@ -143,7 +145,8 @@ public class Modelo {
      * Metodo encargado de guardar datos de la aplicacion
      *
      * @param file el parametro file hace referencia al fichero donde se van a guardar los datos.
-     * @throws IOException el metodo puede lanzar una excepcion del tipo IOException
+     * @throws IOException el metodo puede lanzar una excepcion del tipo IOException si no encuentra
+     * el fichero
      */
     public void guardarDatos(File file) throws IOException {
         FileOutputStream fos = new FileOutputStream(file);
