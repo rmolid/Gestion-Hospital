@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @since 16/02/2021
  */
 public class Centro implements Serializable {
+
     private Icon imagenCentro;
     private String nombreCentro;
     private String localidadCentro;

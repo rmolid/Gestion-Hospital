@@ -43,14 +43,10 @@
 				<staticText>
 					<reportElement style="Title" x="5" y="14" width="558" height="66" forecolor="#000000" uuid="a2a2cac8-5a7d-4487-8c54-dab235ce4e21"/>
 					<textElement>
-						<font fontName="MS Reference Sans Serif" size="35" isBold="true"/>
+						<font fontName="Arial" size="35" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Registro de médicos]]></text>
 				</staticText>
-				<image>
-					<reportElement x="600" y="10" width="86" height="74" uuid="b992d93d-98db-475f-a95e-7417c53e864a"/>
-					<imageExpression><![CDATA["imagenes/hospital_Informe.png"]]></imageExpression>
-				</image>
 			</frame>
 			<frame>
 				<reportElement mode="Opaque" x="-1" y="90" width="751" height="32" forecolor="#000000" backcolor="#5C9DD6" uuid="e3c14156-5b51-4201-918b-97fdc012e5d4"/>
@@ -74,7 +70,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="76c1025c-80ef-4dee-abec-3c233dcb615c"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DNI]]></text>
 			</staticText>
@@ -83,7 +79,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="538ad031-ff20-4fa8-a0d8-3c314c324e3b"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRE]]></text>
 			</staticText>
@@ -92,7 +88,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c31245aa-e690-40b3-a3f7-a67b05d49fd4"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[APELLIDO]]></text>
 			</staticText>
@@ -101,7 +97,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6a41ed2e-7d39-4ebc-bc1e-d89652e14a8f"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[EDAD]]></text>
 			</staticText>
@@ -110,7 +106,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4bce28f6-eb6e-4589-babc-ae0a046d2dfc"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[GÉNERO]]></text>
 			</staticText>
@@ -119,7 +115,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="463f7724-77ae-4e75-ad69-4c134a42e964"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CENTRO]]></text>
 			</staticText>
@@ -128,7 +124,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="463f7724-77ae-4e75-ad69-4c134a42e964"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PRIVADO]]></text>
 			</staticText>
@@ -137,63 +133,66 @@
 	<detail>
 		<band height="44" splitType="Stretch">
 			<textField>
-				<reportElement x="29" y="7" width="100" height="30" uuid="19df6028-03d1-4ae6-b3a9-ca1fe82ed3b3">
+				<reportElement x="10" y="7" width="100" height="30" uuid="19df6028-03d1-4ae6-b3a9-ca1fe82ed3b3">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="76c1025c-80ef-4dee-abec-3c233dcb615c"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="11"/>
+					<font fontName="Arial" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dni}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="127" y="7" width="100" height="30" uuid="06117089-c37f-4621-bfdf-2db367c0d468">
+				<reportElement x="108" y="7" width="100" height="30" uuid="06117089-c37f-4621-bfdf-2db367c0d468">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="538ad031-ff20-4fa8-a0d8-3c314c324e3b"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="11"/>
+					<font fontName="Arial" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="232" y="7" width="100" height="30" uuid="ca075f66-dcea-442a-9524-2ced14dbb248">
+				<reportElement x="213" y="7" width="100" height="30" uuid="ca075f66-dcea-442a-9524-2ced14dbb248">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c31245aa-e690-40b3-a3f7-a67b05d49fd4"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="11"/>
+					<font fontName="Arial" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="332" y="7" width="100" height="30" uuid="1c998f9a-7e5c-4433-ac0f-8653dd24a5f4">
+				<reportElement x="313" y="7" width="100" height="30" uuid="1c998f9a-7e5c-4433-ac0f-8653dd24a5f4">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6a41ed2e-7d39-4ebc-bc1e-d89652e14a8f"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="11"/>
+					<font fontName="Arial" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{edad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="438" y="7" width="100" height="30" uuid="62dccf97-26e4-4d3a-b90c-932560be0d44">
+				<reportElement x="419" y="7" width="100" height="30" uuid="62dccf97-26e4-4d3a-b90c-932560be0d44">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4bce28f6-eb6e-4589-babc-ae0a046d2dfc"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="11"/>
+					<font fontName="Arial" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{esHombre}.equals(true) ? ("HOMBRE") : ("MUJER")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="545" y="7" width="100" height="30" uuid="fe9e86ba-0386-4cff-ae2c-3f04bafb4798">
+				<reportElement x="526" y="7" width="100" height="30" uuid="fe9e86ba-0386-4cff-ae2c-3f04bafb4798">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="463f7724-77ae-4e75-ad69-4c134a42e964"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="11"/>
+					<font fontName="Arial" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{centro}.getNombreCentro()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="660" y="7" width="100" height="30" uuid="d8594abb-05f5-48cd-ae2e-234502850e1f">
+				<reportElement x="641" y="7" width="100" height="30" uuid="d8594abb-05f5-48cd-ae2e-234502850e1f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fbd50be3-5f68-4464-8116-9fee30c5711a"/>
 				</reportElement>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{centro}.getEsPrivado().equals(true) ? ("SI") : ("NO")]]></textFieldExpression>
 			</textField>
 		</band>
@@ -209,7 +208,7 @@
 			<staticText>
 				<reportElement x="30" y="44" width="269" height="31" forecolor="#000033" backcolor="rgba(153, 204, 153, 0.0)" uuid="bed229ba-3e1b-4ae6-849f-00fa8ef76b5e"/>
 				<textElement>
-					<font fontName="Arial Black" size="18" isBold="true"/>
+					<font fontName="Arial" size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Edad de los médicos]]></text>
 			</staticText>

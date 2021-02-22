@@ -70,7 +70,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="16730f2c-87e1-4ea4-b167-97c5bb0c4ed6"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Microsoft Sans Serif" size="16" isBold="true"/>
+					<font fontName="Arial" size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRE]]></text>
 			</staticText>
@@ -79,7 +79,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="54faa2a6-feda-4268-8e9d-a57fb74bacd0"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Microsoft Sans Serif" size="16" isBold="true"/>
+					<font fontName="Arial" size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[LOCALIDAD]]></text>
 			</staticText>
@@ -88,7 +88,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8b5bfd01-9232-4055-8ff7-517becfca40a"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Microsoft Sans Serif" size="16" isBold="true"/>
+					<font fontName="Arial" size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CAPACIDAD]]></text>
 			</staticText>
@@ -97,7 +97,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="39cbf09e-8682-4405-995f-8d5bb5febafd"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Microsoft Sans Serif" size="16" isBold="true"/>
+					<font fontName="Arial" size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PRIVADO]]></text>
 			</staticText>
@@ -106,7 +106,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e1bfa6b1-fbd9-486a-8d99-e3a5c12b91f9"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Microsoft Sans Serif" size="16" isBold="true"/>
+					<font fontName="Arial" size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[IMAGEN]]></text>
 			</staticText>
@@ -121,7 +121,7 @@
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="16730f2c-87e1-4ea4-b167-97c5bb0c4ed6"/>
 					</reportElement>
 					<textElement>
-						<font fontName="MS Reference Sans Serif" size="12"/>
+						<font fontName="Arial" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nombreCentro}]]></textFieldExpression>
 				</textField>
@@ -131,7 +131,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="54faa2a6-feda-4268-8e9d-a57fb74bacd0"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="12"/>
+					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{localidadCentro}]]></textFieldExpression>
 			</textField>
@@ -140,7 +140,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8b5bfd01-9232-4055-8ff7-517becfca40a"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="12"/>
+					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{capacidad}]]></textFieldExpression>
 			</textField>
@@ -149,7 +149,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="39cbf09e-8682-4405-995f-8d5bb5febafd"/>
 				</reportElement>
 				<textElement>
-					<font fontName="MS Reference Sans Serif" size="12"/>
+					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{esPrivado}.equals(true) ? ("PRIVADO") : ("PUBLICO")]]></textFieldExpression>
 			</textField>

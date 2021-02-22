@@ -395,7 +395,7 @@ public class Controlador implements ActionListener, FocusListener, ItemListener,
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        controller.openDocument("GestionHospitalManualUso.pdf");
+        controller.openDocument(getClass().getClassLoader().getResource("GestionHospitalManualUso.pdf"));
     }
 
     /**
